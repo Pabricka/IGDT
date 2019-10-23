@@ -10,13 +10,17 @@ public class PlayerMovement : MonoBehaviour
     float horizontalMove = 0f;
     public bool shoot = false;
 
+    private Animator anim;
+
     private float lastDamageTime;
+    private float lastAttackTime;
 
     public float immuneTime;
     public float stunTime;
 
     void Start()
     {
+        anim = GetComponent<Animator>();
         
     }
 
@@ -31,13 +35,22 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = false;
         }
-        if(Input.GetButton("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
-            shoot = true;
+            anim.SetBool("Attack", true);
+            lastAttackTime = Time.time;
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            if (Time.time > lastAttackTime + 0.2)
+            {
+                shoot = true;
+            }
         }
         else
         {
             shoot = false;
+            anim.SetBool("Attack", false);
         }
     }
 
@@ -55,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
         {
             lastDamageTime = Time.time;
             controller.TakeDamage(damage, enemyX);
+
+            anim.SetTrigger("Damage");
         }
     }
 
