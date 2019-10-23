@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButton("Fire1"))
         {
-            if (Time.time > lastAttackTime + 0.2)
+            if (Time.time > lastAttackTime + 0.15)
             {
                 shoot = true;
             }
