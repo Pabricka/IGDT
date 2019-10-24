@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public bool jump = false;
     public CharacterController2D controller;
     float horizontalMove = 0f;
-    public bool shoot = false;
+    private bool shoot = false;
+    private bool grab = false;
 
     private Animator anim;
 
@@ -35,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = false;
         }
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2"))
         {
             anim.SetBool("Attack", true);
             lastAttackTime = Time.time;
@@ -47,8 +48,16 @@ public class PlayerMovement : MonoBehaviour
                 shoot = true;
             }
         }
+        else if (Input.GetButton("Fire2"))
+        {
+            if (Time.time > lastAttackTime + 0.15)
+            {
+                grab = true;
+            }
+        }
         else
         {
+            grab = false;
             shoot = false;
             anim.SetBool("Attack", false);
         }
@@ -58,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Time.time > lastDamageTime + stunTime)
         {
-            controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump, shoot);
+            controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump, shoot, grab);
         }
     }
 

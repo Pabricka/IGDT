@@ -22,6 +22,8 @@ public class CharacterController2D : MonoBehaviour
     public float fuel;
     public SpriteRenderer weaponRenderer;
     public BoxCollider2D weaponCollider;
+
+    public GameObject hand;
     public Light fuelLight;
     public float maxFuel;
     const float k_CeilingRadius = .2f;
@@ -71,7 +73,7 @@ public class CharacterController2D : MonoBehaviour
     }
 
 
-    public void Move(float move, bool crouch, bool jump, bool shoot)
+    public void Move(float move, bool crouch, bool jump, bool shoot, bool grab)
     {
         // If crouching, check to see if the character can stand up
         if (!crouch)
@@ -122,13 +124,13 @@ public class CharacterController2D : MonoBehaviour
             m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
             // If the input is moving the player right and the player is facing left...
-            if (move > 0 && !m_FacingRight)
+            if (move > 0 && !m_FacingRight && !grab)
             {
                 // ... flip the player.
                 Flip();
             }
             // Otherwise if the input is moving the player left and the player is facing right...
-            else if (move < 0 && m_FacingRight)
+            else if (move < 0 && m_FacingRight && !grab)
             {
                 // ... flip the player.
                 Flip();
@@ -161,7 +163,15 @@ public class CharacterController2D : MonoBehaviour
             color.a = 0;
             weaponRenderer.color = color;
         }
-
+        if (grab)
+        {
+            hand.SetActive(true);
+        }
+        else
+        {
+            hand.GetComponent<FixedJoint2D>().connectedBody = null;
+            hand.SetActive(false);
+        }
         if(m_Grounded && fuel < maxFuel)
         {
             Color color = fuelLight.color;
