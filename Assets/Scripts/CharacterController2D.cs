@@ -139,14 +139,11 @@ public class CharacterController2D : MonoBehaviour
         // If the player should jump...
         if (fuel > 0 && jump)
         {
-            if (m_Grounded) m_Rigidbody2D.AddForce(new Vector2(0f, m_InitialJumpForce));
+            if (m_Grounded) m_Rigidbody2D.AddForce(new Vector2(0f, m_InitialJumpForce * Time.deltaTime));
             // Add a vertical force to the player.
             m_Grounded = false;
-            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-            fuel -= 0.1f;
-            Color color = fuelLight.color;
-            color.g -= 0.025f;
-            fuelLight.color = color;
+            m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * Time.deltaTime));
+            fuel -= 1f * Time.deltaTime;
         }
 
         if(shoot)
@@ -174,16 +171,16 @@ public class CharacterController2D : MonoBehaviour
         }
         if(m_Grounded && fuel < maxFuel)
         {
-            Color color = fuelLight.color;
-            color.g += 0.05f;
-            fuelLight.color = color;
-            fuel += 0.2f;
+            fuel += 2f * Time.deltaTime;
         }
     }
 
     public void TakeDamage(int damage, float enemyX)
     {
         HP -= damage;
+        Color color = fuelLight.color;
+        color.g -= damage * 0.25f;
+        fuelLight.color = color;
         if (HP <= 0) GameOver();
         m_Rigidbody2D.velocity = new Vector2(0f, 0f);
         if (enemyX > transform.position.x) m_Rigidbody2D.AddForce(new Vector2(xKnockback, yKnockback));

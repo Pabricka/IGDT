@@ -9,7 +9,6 @@ public class Hand : MonoBehaviour
     void Start()
     {
         joint = GetComponent<FixedJoint2D>();
-        joint.connectedBody = null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
