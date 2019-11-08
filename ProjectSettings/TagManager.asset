@@ -9,6 +9,7 @@ TagManager:
   - PlatformEdge
   - Hand
   - Movable
+  - spiderCollider
   layers:
   - Default
   - TransparentFX
