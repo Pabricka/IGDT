@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool jumpPowerUp = false;
+    public bool attackPowerUp = false;
+
+
+
     public float runSpeed;
     public bool jump = false;
     public CharacterController2D controller;
@@ -33,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-        if(Input.GetButton("Jump"))
+        if(Input.GetButton("Jump") && jumpPowerUp)
         {
             jump = true;
         }
