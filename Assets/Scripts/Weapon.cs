@@ -13,5 +13,9 @@ public class Weapon : MonoBehaviour
         {
             collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, transform.position.x);
         }
+        if (collision.CompareTag("Door"))
+        {
+            collision.gameObject.GetComponent<Door>().Break(transform.position.x);
+        }
     }
 }

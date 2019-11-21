@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public bool jumpPowerUp = false;
     public bool attackPowerUp = false;
+    public bool grabPowerUp = false;
 
 
 
@@ -51,14 +52,14 @@ public class PlayerMovement : MonoBehaviour
             anim.SetBool("Attack", true);
             lastAttackTime = Time.time;
         }
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1") && attackPowerUp)
         {
             if (Time.time > lastAttackTime + 0.15)
             {
                 shoot = true;
             }
         }
-        else if (Input.GetButton("Fire2"))
+        else if (Input.GetButton("Fire2") && grabPowerUp)
         {
             if (Time.time > lastAttackTime + 0.15)
             {

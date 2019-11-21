@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpiderMovement : MonoBehaviour
 {
     public float speed;
+    public bool flipped;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +22,16 @@ public class SpiderMovement : MonoBehaviour
     {
         if (collision.CompareTag("spiderCollider"))
         {
-            transform.eulerAngles += transform.forward * 90;
-            transform.position += -transform.right * 1;
+            if (!flipped)
+            {
+                transform.eulerAngles += transform.forward * 90;
+                transform.position += -transform.right * 1;
+            }
+            else
+            {
+                transform.eulerAngles -= transform.forward * 90;
+                transform.position -= -transform.right * 1;
+            }
         }
     }
 }
