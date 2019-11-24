@@ -8,14 +8,14 @@ public class PlayerMovement : MonoBehaviour
     public bool attackPowerUp = false;
     public bool grabPowerUp = false;
 
-
+    bool stopGrab;
 
     public float runSpeed;
     public bool jump = false;
     public CharacterController2D controller;
     float horizontalMove = 0f;
     private bool shoot = false;
-    private bool grab = false;
+    public bool grab = false;
 
     private Animator anim;
 
@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
                 shoot = true;
             }
         }
-        else if (Input.GetButton("Fire2") && grabPowerUp)
+        else if (Input.GetButton("Fire2") && grabPowerUp )
         {
             if (Time.time > lastAttackTime + 0.15)
             {
