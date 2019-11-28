@@ -31,6 +31,8 @@ public class CharacterController2D : MonoBehaviour
     private bool m_FacingRight = true;
     private Vector3 m_Velocity = Vector3.zero;
 
+    public ParticleSystem particles;
+
     [Header("Events")]
     [Space]
 
@@ -51,6 +53,7 @@ public class CharacterController2D : MonoBehaviour
 
         if (OnCrouchEvent == null)
             OnCrouchEvent = new BoolEvent();
+        particles.Pause();
     }
 
     private void FixedUpdate()
@@ -69,6 +72,11 @@ public class CharacterController2D : MonoBehaviour
                 if (!wasGrounded)
                     OnLandEvent.Invoke();
             }
+        }
+        if (m_Grounded)
+        {
+            particles.Clear();
+            particles.Pause();
         }
     }
 
@@ -144,6 +152,7 @@ public class CharacterController2D : MonoBehaviour
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * Time.deltaTime));
             fuel -= 1f * Time.deltaTime;
+            particles.Play();
         }
 
         if(shoot)
