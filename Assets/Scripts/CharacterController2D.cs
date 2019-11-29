@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class CharacterController2D : MonoBehaviour
     public BoolEvent OnCrouchEvent;
     private bool m_wasCrouching = false;
 
+    public Image fuelBar;
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -58,6 +61,7 @@ public class CharacterController2D : MonoBehaviour
 
     private void FixedUpdate()
     {
+        fuelBar.fillAmount = fuel / maxFuel;
         bool wasGrounded = m_Grounded;
         m_Grounded = false;
 
@@ -72,11 +76,6 @@ public class CharacterController2D : MonoBehaviour
                 if (!wasGrounded)
                     OnLandEvent.Invoke();
             }
-        }
-        if (m_Grounded)
-        {
-            particles.Clear();
-            particles.Pause();
         }
     }
 
@@ -152,9 +151,14 @@ public class CharacterController2D : MonoBehaviour
             m_Grounded = false;
             m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * Time.deltaTime));
             fuel -= 1f * Time.deltaTime;
-            particles.Play();
+            if (!particles.isPlaying){
+                particles.Play();
+            }
         }
-
+        else
+        {
+            particles.Stop();
+        }
         if(shoot)
         {
             weaponCollider.enabled = true;
@@ -164,6 +168,7 @@ public class CharacterController2D : MonoBehaviour
         }
         else
         {
+
             weaponCollider.enabled = false;
             Color color = weaponRenderer.color;
             color.a = 0;
