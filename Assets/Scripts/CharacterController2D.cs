@@ -15,7 +15,9 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
+    public int maxHP;
     public int HP;
+    public SpriteRenderer[] wrenches;
     public float yKnockback;
     public float xKnockback;
 
@@ -197,11 +199,30 @@ public class CharacterController2D : MonoBehaviour
         color.g -= damage * 0.25f;
         fuelLight.color = color;
         if (HP <= 0) GameOver();
+        if(HP < 1)
+        {
+            wrenches[0].color = new Color32(61, 29, 29, 255);
+        }
+        if (HP < 2)
+        {
+            wrenches[1].color = new Color32(61, 29, 29, 255);
+        }
+        if (HP < 3)
+        {
+            wrenches[2].color = new Color32(61, 29, 29, 255);
+        }
         m_Rigidbody2D.velocity = new Vector2(0f, 0f);
         if (enemyX > transform.position.x) m_Rigidbody2D.AddForce(new Vector2(xKnockback, yKnockback));
         else m_Rigidbody2D.AddForce(new Vector2(-xKnockback, yKnockback));
     }
 
+    public void Heal()
+    {
+        HP = maxHP;
+        wrenches[0].color = new Color32(255, 255, 255, 255);
+        wrenches[1].color = new Color32(255, 255, 255, 255);
+        wrenches[2].color = new Color32(255, 255, 255, 255);
+    }
     void GameOver()
     {
         SceneManager.LoadScene("StartMenu");
