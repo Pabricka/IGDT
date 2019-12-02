@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterController2D : MonoBehaviour
 {
@@ -203,7 +204,7 @@ public class CharacterController2D : MonoBehaviour
 
     void GameOver()
     {
-
+        SceneManager.LoadScene("StartMenu");
     }
 
 

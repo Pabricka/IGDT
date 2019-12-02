@@ -97,6 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
     void GameOver()
     {
-        SceneManager.LoadScene("MainMenu");
+        
     }
 }
