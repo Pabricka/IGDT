@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
+        jumpPowerUp = GlobalControl.Instance.jumpPowerUp;
+        attackPowerUp = GlobalControl.Instance.attackPowerUp;
+        grabPowerUp = GlobalControl.Instance.grabPowerUp;
         
     }
 
@@ -94,9 +97,13 @@ public class PlayerMovement : MonoBehaviour
             anim.SetTrigger("Damage");
         }
     }
-
-    void GameOver()
+    public void SavePlayer()
     {
-        
+        GlobalControl.Instance.attackPowerUp = attackPowerUp;
+        GlobalControl.Instance.jumpPowerUp = jumpPowerUp;
+        GlobalControl.Instance.grabPowerUp = grabPowerUp;
+
+        anim.SetTrigger("Death");
     }
+    
 }

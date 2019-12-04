@@ -15,6 +15,8 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
+    public GameObject gameOver;
+
     public int maxHP;
     public int HP;
     public SpriteRenderer[] wrenches;
@@ -49,6 +51,8 @@ public class CharacterController2D : MonoBehaviour
     private bool m_wasCrouching = false;
 
     public Image fuelBar;
+
+    
 
     private void Awake()
     {
@@ -223,9 +227,11 @@ public class CharacterController2D : MonoBehaviour
         wrenches[1].color = new Color32(255, 255, 255, 255);
         wrenches[2].color = new Color32(255, 255, 255, 255);
     }
-    void GameOver()
+   public void GameOver()
     {
-        SceneManager.LoadScene("StartMenu");
+        GetComponent<PlayerMovement>().SavePlayer();
+        gameOver.SetActive(true);
+        //SceneManager.LoadScene("StartMenu");
     }
 
 
