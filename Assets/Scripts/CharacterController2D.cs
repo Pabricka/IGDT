@@ -15,6 +15,11 @@ public class CharacterController2D : MonoBehaviour
     [SerializeField] private Transform m_CeilingCheck;                          // A position marking where to check for ceilings
     [SerializeField] private Collider2D m_CrouchDisableCollider;                // A collider that will be disabled when crouching
 
+    public AudioSource jumpEffect;
+    public AudioSource attackEffect;
+    public AudioSource pickUpEffect;
+    public AudioSource powerUpEffect;
+
     public GameObject gameOver;
 
     public int maxHP;
@@ -161,10 +166,16 @@ public class CharacterController2D : MonoBehaviour
             if (!particles.isPlaying){
                 particles.Play();
             }
+            if (!jumpEffect.isPlaying)
+            {
+                jumpEffect.Play();
+            }
+
         }
         else
         {
             particles.Stop();
+            jumpEffect.Stop();
         }
         if(shoot)
         {
@@ -172,10 +183,14 @@ public class CharacterController2D : MonoBehaviour
             Color color = weaponRenderer.color;
             color.a = 1;
             weaponRenderer.color = color;
+            if (!attackEffect.isPlaying)
+            {
+                attackEffect.Play();
+            }
         }
         else
         {
-
+            attackEffect.Stop();
             weaponCollider.enabled = false;
             Color color = weaponRenderer.color;
             color.a = 0;
@@ -222,6 +237,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void Heal()
     {
+        pickUpEffect.Play();
         HP = maxHP;
         wrenches[0].color = new Color32(255, 255, 255, 255);
         wrenches[1].color = new Color32(255, 255, 255, 255);

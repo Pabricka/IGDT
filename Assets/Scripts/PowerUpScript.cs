@@ -32,6 +32,7 @@ public class PowerUpScript : MonoBehaviour
                 collision.gameObject.GetComponent<PlayerMovement>().attackPowerUp = true;
             }
 
+            collision.gameObject.GetComponent<CharacterController2D>().powerUpEffect.Play();
             text.SetActive(true);
             Destroy(this.gameObject);
         }

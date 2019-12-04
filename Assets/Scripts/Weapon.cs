@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-
+    public AudioSource enemyDeath;
     public int damage;
+
+    public void Start()
+    {
+        enemyDeath = GetComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, transform.position.x);
+            if(collision.gameObject.GetComponent<Enemy>().TakeDamage(damage, transform.position.x))
+            {
+                enemyDeath.Play();
+            }
         }
         if (collision.CompareTag("Door"))
         {

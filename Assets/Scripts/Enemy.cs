@@ -16,13 +16,17 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public void TakeDamage(int damage, float playerX)
+    public bool TakeDamage(int damage, float playerX)
     {
         HP -= damage;
-        if (HP <= 0) Die();
+        if (HP <= 0) {
+            Die();
+            return true;
+        }
         rb.velocity = new Vector2(0f, 0f);
         if(playerX < transform.position.x) rb.AddForce(new Vector2(xKnockback, yKnockback));
         else rb.AddForce(new Vector2(-xKnockback, yKnockback));
+        return false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,6 +39,6 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
-        Destroy(gameObject, 0.25f);
+        Destroy(gameObject, 0.1f);
     }
 }
