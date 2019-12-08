@@ -113,5 +113,12 @@ public class PlayerMovement : MonoBehaviour
         dead = true;
         anim.SetTrigger("Death");
     }
-    
+    private void onTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "End")
+        {
+            SceneManager.LoadScene("Credits");
+        }
+    }
+
 }

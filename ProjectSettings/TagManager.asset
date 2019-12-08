@@ -12,6 +12,7 @@ TagManager:
   - spiderCollider
   - Door
   - Stop
+  - End
   layers:
   - Default
   - TransparentFX
